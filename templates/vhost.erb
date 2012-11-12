@@ -1,0 +1,8 @@
+server {
+	server_name <%= server_name %> ;
+	root <%= root %>;
+
+	<% @type.each do |obj| -%>
+		include globals/<%= obj%>.conf ;
+	<% end %>
+}

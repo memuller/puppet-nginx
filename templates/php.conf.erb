@@ -1,0 +1,6 @@
+location ~ \.php$ {
+	fastcgi_read_timeout 260 ;
+	fastcgi_pass php ;
+	fastcgi_index index.php; 
+	include fastcgi_params ;
+}
