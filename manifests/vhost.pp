@@ -20,30 +20,7 @@ define nginx::vhost (
 		default => 'absent',
 	}
 
-	file { '/etc/nginx/conf.d/php.conf':
-		ensure => present,
-		content => template('nginx/upstream-php.conf.erb'),
-		notify => Service['nginx']
-	}
-
-	file { '/etc/nginx/globals':
-		ensure => directory
-	}
-
-	file { '/etc/nginx/globals/php.conf':
-		ensure => present,
-		content => template('nginx/php.conf.erb')
-	}
-
-	file { '/etc/nginx/globals/restrictions.conf':
-		ensure => present,
-		content => template('nginx/restrictions.conf.erb')
-	}
-
-	file { '/etc/nginx/globals/wordpress-mu.conf':
-		ensure => present,
-		content => template('nginx/wordpress-mu.conf.erb')
-	}
+	
 
 	file { "/etc/nginx/sites-available/${priority}-${file}.conf":
 		ensure 	=> $file_ensure,
