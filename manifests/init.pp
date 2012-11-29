@@ -43,6 +43,11 @@ class nginx (
 		content => template('nginx/php.conf.erb')
 	}
 
+	file { '/etc/nginx/globals/php-simple.conf':
+		ensure => present,
+		content => template('nginx/php-simple.conf.erb')
+	}
+
 	file { '/etc/nginx/globals/restrictions.conf':
 		ensure => present,
 		content => template('nginx/restrictions.conf.erb')
