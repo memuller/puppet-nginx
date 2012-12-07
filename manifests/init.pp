@@ -48,6 +48,11 @@ class nginx (
 		content => template('nginx/php-simple.conf.erb')
 	}
 
+	file { '/etc/nginx/globals/wordpress-subdirectory.conf':
+		ensure => present,
+		content => template('nginx/wordpress-subdirectory.conf.erb')
+	}
+
 	file { '/etc/nginx/globals/restrictions.conf':
 		ensure => present,
 		content => template('nginx/restrictions.conf.erb')
