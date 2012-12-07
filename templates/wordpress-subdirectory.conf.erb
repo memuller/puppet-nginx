@@ -1,0 +1,14 @@
+index index.php ;
+
+location / {
+	try_files $uri /wordpress/$uri/ /wordpress/index.php?q=$uri&$args ; 
+}
+
+location ~ /wordpress/wp-content/(.*) {
+		try_files /wp-content/$1 $1 /wordpress/wp-content/$1 ;
+}
+
+location /wordpress {
+	try_files $uri $uri/ /wordpress/index.php?q=$uri&$args;
+
+}
