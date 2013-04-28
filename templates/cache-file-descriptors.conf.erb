@@ -1,0 +1,11 @@
+# This tells Nginx to cache open file handles, "not found" errors, metadata about files and their permissions, etc.
+# This means Nginx can imediatelly start serving the file; the downsize is that it may miss file changes. 
+# In the below configuration, inactive files are released from the cache after 20 seconds, whereas
+# active (recently requested) files are re-validated every 30 seconds.
+# Descriptors will not be cached unless they are used at least 2 times within 20 seconds (the inactive time).
+# A maximum of the 1000 most recently used file descriptors can be cached at any time.
+
+open_file_cache          max=1000 inactive=20s;
+open_file_cache_valid    30s;
+open_file_cache_min_uses 2;
+open_file_cache_errors   on;

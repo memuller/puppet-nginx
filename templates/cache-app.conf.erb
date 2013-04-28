@@ -1,0 +1,5 @@
+location ~ \.(css|htc|js|js2|js3|js4)$ {
+	expires 1M;
+	access_log off;
+	add_header Cache-Control "public";
+}

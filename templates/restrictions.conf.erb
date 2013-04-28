@@ -9,9 +9,12 @@ location = /robots.txt {
 	access_log off;
 }
 
-# Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store (Mac).
 location ~ /\. {
 	deny all;
 	access_log off;
 	log_not_found off;
+}
+
+location ~* (?:\.(?:bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$ {
+    deny all;
 }
