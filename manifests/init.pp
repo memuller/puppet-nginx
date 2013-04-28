@@ -60,6 +60,11 @@ class nginx (
 		ensure => present,
 		content => template('nginx/wordpress-mu.conf.erb')
 	}
+	# Wordpress Total Cache minify rewrite rules.
+	file { '/etc/nginx/globals/worpdpress-w3tc-minify.conf':
+		ensure => present,
+		content => template('nginx/worpdpress-w3tc-minify.conf.erb')
+	}
 
 	# GZIP.
 	file { '/etc/nginx/globals/gzip.conf':
