@@ -23,7 +23,7 @@ class nginx (
 	}
 
 	package { 'nginx':
-		ensure => $ensure,
+		ensure => $ensure
 	}
 
 	service { 'nginx':
