@@ -4,7 +4,7 @@ class nginx (
 		$user = 'www-data',
 		$group = 'www-data',
 		$worker_processes = 'auto',
-		$client_max_body_size = '200M';
+		$client_max_body_size = '200M'
 	) {
 
 	$running = $ensure ? {
