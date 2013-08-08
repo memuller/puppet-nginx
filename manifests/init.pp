@@ -67,6 +67,9 @@ class nginx (
 	file { '/etc/nginx/globals/wordpress-mu.conf':
 		content => template('nginx/wordpress-mu.conf.erb')
 	}
+	file { '/etc/nginx/globals/wordpress-ms-files.conf':
+		content => template('nginx/wordpress-ms-files.conf.erb')
+	}
 	# Wordpress Total Cache minify rewrite rules.
 	file { '/etc/nginx/globals/wordpress-w3tc-minify.conf':
 		content => template('nginx/wordpress-w3tc-minify.conf.erb')
