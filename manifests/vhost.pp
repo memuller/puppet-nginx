@@ -6,7 +6,10 @@ define nginx::vhost (
 	$server_name = $name,
 	$index = 'index.html',
 	$template = 'nginx/vhost.erb',
-	$type = ['php']
+	$type = ['php'],
+	$extra = '',
+	$www = false
+
 ) {
 	include nginx
 
@@ -33,5 +36,24 @@ define nginx::vhost (
 		ensure 	=> $link_ensure,
 		target 	=> "/etc/nginx/sites-available/${priority}-${file}.conf",
 		require => Package['nginx'],
+	}
+
+	if $www {
+		file { "/etc/nginx/sites-available/${priority}-www.${file}.conf":
+			ensure 	=> $file_ensure,
+			content => "
+				server { 
+					server_name www.${file} ; 
+					rewrite ^ \$scheme://${file}\$uri permanent ; 
+				}",
+			require => File["/etc/nginx/sites-enabled/${priority}-www.${file}.conf"],
+			notify 	=> Service['nginx'],
+		}
+
+		file { "/etc/nginx/sites-enabled/${priority}-www.${file}.conf":
+			ensure 	=> $link_ensure,
+			target 	=> "/etc/nginx/sites-available/${priority}-www.${file}.conf",
+			require => Package['nginx'],
+		}		
 	}
 }
