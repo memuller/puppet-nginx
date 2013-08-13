@@ -8,7 +8,8 @@ define nginx::vhost (
 	$template = 'nginx/vhost.erb',
 	$type = ['php'],
 	$extra = '',
-	$www = false
+	$www = false,
+	$alias = false
 
 ) {
 	include nginx
@@ -36,6 +37,25 @@ define nginx::vhost (
 		ensure 	=> $link_ensure,
 		target 	=> "/etc/nginx/sites-available/${priority}-${file}.conf",
 		require => Package['nginx'],
+	}
+
+	if($alias){
+		file { "/etc/nginx/sites-available/${priority}-${alias}.conf":
+			ensure 	=> $file_ensure,
+			content => "
+				server { 
+					server_name ${alias} ; 
+					rewrite ^ \$scheme://${file}\$uri permanent ; 
+				}",
+			require => File["/etc/nginx/sites-enabled/${priority}-${file}.conf"],
+			notify 	=> Service['nginx'],
+		}
+
+		file { "/etc/nginx/sites-enabled/${priority}-www.${file}.conf":
+			ensure 	=> $link_ensure,
+			target 	=> "/etc/nginx/sites-available/${priority}-${alias}.conf",
+			require => Package['nginx'],
+		}
 	}
 
 	if $www {
