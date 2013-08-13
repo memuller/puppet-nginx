@@ -39,7 +39,7 @@ define nginx::vhost (
 		require => Package['nginx'],
 	}
 
-	if($alias){
+	if $alias {
 		file { "/etc/nginx/sites-available/${priority}-${alias}.conf":
 			ensure 	=> $file_ensure,
 			content => "
