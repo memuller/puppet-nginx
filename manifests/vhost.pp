@@ -9,7 +9,7 @@ define nginx::vhost (
 	$type = ['php'],
 	$extra = '',
 	$www = false,
-	$alias = false
+	$alternative = false
 
 ) {
 	include nginx
@@ -39,12 +39,12 @@ define nginx::vhost (
 		require => Package['nginx'],
 	}
 
-	if $alias {
-		file { "/etc/nginx/sites-available/${priority}-${alias}.conf":
+	if $alternative {
+		file { "/etc/nginx/sites-available/${priority}-${alternative}.conf":
 			ensure 	=> $file_ensure,
 			content => "
 				server { 
-					server_name ${alias} ; 
+					server_name ${alternative} ; 
 					rewrite ^ \$scheme://${file}\$uri permanent ; 
 				}",
 			require => File["/etc/nginx/sites-enabled/${priority}-${file}.conf"],
@@ -53,7 +53,7 @@ define nginx::vhost (
 
 		file { "/etc/nginx/sites-enabled/${priority}-www.${file}.conf":
 			ensure 	=> $link_ensure,
-			target 	=> "/etc/nginx/sites-available/${priority}-${alias}.conf",
+			target 	=> "/etc/nginx/sites-available/${priority}-${alternative}.conf",
 			require => Package['nginx'],
 		}
 	}
